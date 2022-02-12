@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\suratController;
-use App\Http\Controllers\daftarSuratController;
 use App\Http\Controllers\departementController;
+use App\Http\Controllers\tipeController;
+use App\Http\Controllers\suratController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,10 +18,9 @@ use App\Http\Controllers\departementController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/surat', function () {
-    return view('insertSurat');
-});
 Route::get('/lists', function () {
     return view('daftarSurat');
 });
 Route::resource('departement', departementController::class);
+Route::resource('tipe', tipeController::class);
+Route::resource('surat', suratController::class);

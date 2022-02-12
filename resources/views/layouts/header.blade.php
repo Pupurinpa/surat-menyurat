@@ -18,6 +18,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url('departement') }}">Departement</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('tipe') }}">Jenis Surat</a>
+          </li>
         </ul>
         
       </div>

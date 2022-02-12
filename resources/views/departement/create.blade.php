@@ -26,7 +26,7 @@
         is-invalid
         @enderror" name="singkatan" value="{{ old('singkatan') }}" maxLength="3">
         <small>Maks 3 huruf</small>
-        @error('nama_departement')
+        @error('singkatan')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>

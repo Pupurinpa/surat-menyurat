@@ -7,30 +7,30 @@
     <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
 @endif
 <div class="card mb-1 light">
-    <div class="card-header">Ubah Departement</div>
+    <div class="card-header">Ubah Jenis Surat</div>
 </div>
-<form method="POST" action="{{ route('departement.update',$departements->id) }}">
+<form method="POST" action="{{ route('tipe.update',$tipes->id) }}">
     @csrf
     {{ method_field('PUT') }}
     <div class="mb-1">
         <label class="form-label">Nama Departement</label>
-        <input type="text" class="form-control @error('nama_departement')
+        <input type="text" class="form-control @error('tipe')
             is-invalid
-        @enderror" name="nama_departement" value="{{ old('nama_departement',$departements->nama_departement) }}" 
+        @enderror" name="tipe" value="{{ old('tipe',$tipes->tipe) }}" 
        
         autofocus>
-        @error('nama_departement')
+        @error('tipe')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-1">
-        <label class="form-label">Singkatan</label>
-        <input type="text" class="form-control @error('singkatan')
+        <label class="form-label">Kode</label>
+        <input type="text" class="form-control @error('kode')
         is-invalid
-        @enderror" name="singkatan" value="{{ old('singkatan',$departements->singkatan) }}" 
+        @enderror" name="kode" value="{{ old('kode',$tipes->kode) }}" 
         maxLength="3">
         <small>Maks 3 huruf</small>
-        @error('singkatan')
+        @error('kode')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
