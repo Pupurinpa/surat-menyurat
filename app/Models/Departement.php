@@ -7,8 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class departement extends Model
 {
+    use HasFactory;
+
     public $table= 'departements';
+
     protected $fillable=[
-        'nama_departement','singkatan'
+        'nama_departement',
+        'singkatan',
     ];
 }

@@ -15,7 +15,7 @@ class departementController extends Controller
     public function index()
     {
         //
-        $departements=departement::all();
+        $departements=departement::paginate(5);
         return view('departement.index',compact('departements'));
     }
 
@@ -40,8 +40,8 @@ class departementController extends Controller
     {
         //
         $validated=$request->validate([
-            'nama_departement'=>'required|unique:nama_departement',
-            'singkatan'=>'required|max:3',
+            'nama_departement'=>'required|unique:departements,nama_departement',
+            'singkatan'=>'required|max:3|unique:departements,singkatan',
         ]);
         $departements=new Departement;
         $departements->nama_departement=$request->nama_departement;
@@ -64,6 +64,8 @@ class departementController extends Controller
     public function show($id)
     {
         //
+        $departements=Departement::find($id);
+        return view('departement.show',compact('departements'));
     }
 
     /**
@@ -75,6 +77,8 @@ class departementController extends Controller
     public function edit($id)
     {
         //
+        $departements=Departement::find($id);
+        return view('departement.edit',compact('departements'));
     }
 
     /**
@@ -87,6 +91,21 @@ class departementController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validated=$request->validate([
+            'nama_departement'=>'required|unique:departements,nama_departement',
+            'singkatan'=>'required|max:3|unique:departements,singkatan',
+        ]);
+        $departements=Departement::find($id);
+        $departements->nama_departement=$request->nama_departement;
+        $departements->singkatan=$request->singkatan;
+        $departements->save();
+        if(!$departements){
+            return back()->with('error','Data gagal di Update !!');
+
+        }else{
+            return back()->with('success','Data berhasil Di Update');
+        }
+
     }
 
     /**
@@ -98,5 +117,13 @@ class departementController extends Controller
     public function destroy($id)
     {
         //
+        $departements=Departement::find($id);
+        $departements->delete();
+        if(!$departements){
+            return back()->with('error','Data gagal Dihapus !!');
+
+        }else{
+            return back()->with('success','Data berhasil Dihapus');
+        }
     }
 }

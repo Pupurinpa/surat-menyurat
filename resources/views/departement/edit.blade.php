@@ -7,15 +7,18 @@
     <div class="alert alert-danger" role="alert">{{ Session::get('error') }}</div>
 @endif
 <div class="card mb-1 light">
-    <div class="card-header">Tambah Departement</div>
+    <div class="card-header">Ubah Departement</div>
 </div>
-<form method="POST" action="{{ route('departement.store') }}">
+<form method="POST" action="{{ route('departement.update',$departements->id) }}">
     @csrf
+    {{ method_field('PUT') }}
     <div class="mb-1">
         <label class="form-label">Nama Departement</label>
         <input type="text" class="form-control @error('nama_departement')
             is-invalid
-        @enderror" name="nama_departement" value="{{ old('nama_departement') }}" autofocus>
+        @enderror" name="nama_departement" value="{{ old('nama_departement',$departements->nama_departement) }}" 
+       
+        autofocus>
         @error('nama_departement')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -24,7 +27,8 @@
         <label class="form-label">Singkatan</label>
         <input type="text" class="form-control @error('singkatan')
         is-invalid
-        @enderror" name="singkatan" value="{{ old('singkatan') }}" maxLength="3">
+        @enderror" name="singkatan" value="{{ old('singkatan',$departements->singkatan) }}" 
+        maxLength="3">
         <small>Maks 3 huruf</small>
         @error('nama_departement')
         <div class="alert alert-danger">{{ $message }}</div>
