@@ -15,6 +15,10 @@ class CreateSuratsTable extends Migration
     {
         Schema::create('surats', function (Blueprint $table) {
             $table->id();
+            $table->string('nomor_surat');
+            $table->string('tanggal_surat');
+            $table->string('perihal');
+            $table->string('letter_file');
             $table->timestamps();
         });
     }
