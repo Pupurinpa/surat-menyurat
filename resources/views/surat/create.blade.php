@@ -51,9 +51,11 @@
                             <div class="mb-3 row">
                                 <label for="letter_no" class="col-sm-3 col-form-label">No. Surat</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control @error('nomor_surat')
+                                    <input type="text"  class="form-control @error('nomor_surat')
                                     is-invalid
-                                    @enderror" name="nomor_surat" value="{{ old('nomor_surat') }}" placeholder="Nomor Surat..">
+                                    @enderror" name="nomor_surat" value="{{ old('nomor_surat') }}" placeholder="Nomor Surat.." maxlength="2"
+                                    onkeypress="return hanyaAngka(event)">
+                                    <small>Hanya angka</small>
                                     @error('nomor_surat')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -86,9 +88,9 @@
 
                             </div>
                             <div class="mb-3 row">
-                                <label for="singkatan" class="col-sm-3 col-form-label">Departemen</label>
+                                <label for="departement_singkatan" class="col-sm-3 col-form-label">Departemen</label>
                                 <div class="col-sm-9">
-                                    <select name="singkatan" class="form-control selectx" required>
+                                    <select name="departement_singkatan" class="form-control selectx" required>
                                         <option value="">Pilih..</option>
                                         @forelse ($departements as $data)
                                             <option value="{{ $data->singkatan }}" 
@@ -130,4 +132,12 @@
         </form>
     </div>
 </main>
+<script>
+    function hanyaAngka(event) {
+        var angka = (event.which) ? event.which : event.keyCode
+        if (angka != 46 && angka > 31 && (angka < 48 || angka > 57))
+            return false;
+        return true;
+    }
+</script>
 @endsection

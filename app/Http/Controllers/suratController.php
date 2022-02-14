@@ -46,7 +46,7 @@ class suratController extends Controller
         //
         $validated=$request->validate([
             'nomor_surat'=>'required|unique:surats,nomor_surat',
-            'tipe_kode'=>'required',
+            'tipe_kode'=>'required|max:2',
             'departement_singkatan'=>'required',
             'tanggal_surat'=>'required:surats,tanggal_surat',
             'perihal'=>'required:surats,perihal',
@@ -55,7 +55,48 @@ class suratController extends Controller
         if($request->file('letter_file')){
             $validated['letter_file'] = $request->file('letter_file')->store('assets/letter-file');
         }
-        $penomoran=$request->old('kode').".".$request->old('nomor_surat')."/".$request->old('singkatan');
+        $date=$request['tanggal_surat'];
+        $year=date('Y',strtotime($date));
+        $month=date('F',strtotime($date));
+        switch ($month){
+            case "January": 
+                $bulan="I";
+            break;
+            case "February":
+                $bulan="II";
+            break;
+            case "March":
+                $bulan="III";
+            break;
+            case "April":
+                $bulan="IV";
+            break;
+            case "May":
+                $bulan="V";
+            break;
+            case "June":
+                $bulan="VI";
+            break;
+            case "July":
+                $bulan="VII";
+            break;
+            case "August":
+                $bulan="VIII";
+            break;
+            case "September":
+                $bulan="IX";
+            break;
+            case "October":
+                $bulan="X";
+            break;
+            case "November":
+                $bulan="XI";
+            break;
+            case "December":
+                $bulan="XII";
+            break;
+            }
+        $penomoran=$request['tipe_kode'].".".$request['nomor_surat']."/".$request['departement_singkatan']."/".$bulan."/".$year;
         $surats=new Surat;
         $surats->nomor_surat=$penomoran;
         $surats->tanggal_surat=$request->tanggal_surat;
