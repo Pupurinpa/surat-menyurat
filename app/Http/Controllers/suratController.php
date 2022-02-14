@@ -7,6 +7,7 @@ use App\Models\tipe;
 use App\Models\Departement;
 use App\Models\surat;
 
+use Illuminate\Support\Facades\Storage;
 class suratController extends Controller
 {
     /**
@@ -17,9 +18,8 @@ class suratController extends Controller
     public function index()
     {
         //
-        $surats=Surat::all();
+        $surats=surat::all();
         return view('surat.index',compact('surats'));
-        
     }
 
     /**
@@ -52,9 +52,7 @@ class suratController extends Controller
             'perihal'=>'required:surats,perihal',
             'letter_file' => 'required|mimes:pdf|file',
         ]);
-        if($request->file('letter_file')){
-            $validated['letter_file'] = $request->file('letter_file')->store('assets/letter-file');
-        }
+        
         $date=$request['tanggal_surat'];
         $year=date('Y',strtotime($date));
         $month=date('F',strtotime($date));
@@ -98,10 +96,15 @@ class suratController extends Controller
             }
         $penomoran=$request['tipe_kode'].".".$request['nomor_surat']."/".$request['departement_singkatan']."/".$bulan."/".$year;
         $surats=new Surat;
+        //
+        $file=$request->letter_file;
+        $filename=time().'.'.$file->getClientOriginalExtension();
+        $request->letter_file->move('assets\letter-file',$filename);
+        //
         $surats->nomor_surat=$penomoran;
         $surats->tanggal_surat=$request->tanggal_surat;
         $surats->perihal=$request->perihal;
-        $surats->letter_file=$validated['letter_file'];
+        $surats->letter_file=$filename;
         $surats->save();
         if(!$surats){
             return back()->with('error','Data gagal disimpan !!');
@@ -120,6 +123,9 @@ class suratController extends Controller
     public function show($id)
     {
         //
+        $surats=Surat::find($id);
+        return view('surat.show',compact('surats'));
+
     }
 
     /**
@@ -131,6 +137,7 @@ class suratController extends Controller
     public function edit($id)
     {
         //
+        return view('surat.show',compact('surats'));
     }
 
     /**
@@ -154,5 +161,13 @@ class suratController extends Controller
     public function destroy($id)
     {
         //
+        $surats=Surat::find($id);
+        $surats->delete();
+        if(!$surats){
+            return back()->with('error','Data gagal Dihapus !!');
+
+        }else{
+            return back()->with('success','Data berhasil Dihapus');
+        }
     }
 }

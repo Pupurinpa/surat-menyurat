@@ -50,7 +50,7 @@
                                         {{ $item->nama_departement }}
                                     </a></td>
                                     <td>{{ $item->singkatan }}</td>
-                                    <td><a href="{{ route('departement.edit',$item->id) }}" class="btn btn-warning btn-sm">Ubah</a>
+                                    <td><a href="{{ route('departement.show',$item->id) }}" class="btn btn-warning btn-sm">Ubah</a>
                                         <form
                                         action="{{ route('departement.destroy',$item->id) }}"
                                         method="POST">
